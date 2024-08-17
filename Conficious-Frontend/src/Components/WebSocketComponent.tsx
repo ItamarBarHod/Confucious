@@ -30,6 +30,7 @@ async function startAudioWorklet() {
 const AudioRecorder: React.FC = () => {
     const [isRecording, setIsRecording] = useState(false);
     const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
+    const [aiOutput, setAiOutput] = useState(''); // Add state for AI output text
 
     const startRecording = async () => {
         try {
@@ -49,8 +50,39 @@ const AudioRecorder: React.FC = () => {
         setIsRecording(false);
     };
 
+    const saveText = () => {
+        const element = document.createElement("a");
+        const file = new Blob([aiOutput], {type: 'text/plain'});
+        element.href = URL.createObjectURL(file);
+        element.download = "AI_Output.txt";
+        document.body.appendChild(element);
+        element.click();
+    };
+
     return (
-        <div>
+        <div style={{ minHeight: '100vh', padding: '16px' }}>
+            <Typography
+                variant="h3"
+                align="center"
+                style={{
+                    marginBottom: 8,
+                    color: 'royalblue',
+                    fontWeight: 'bold'
+                }}
+            >
+                Confucius
+            </Typography>
+            <Typography
+                variant="h6"
+                align="center"
+                style={{
+                    marginBottom: 16,
+                    color: 'gray',
+                    fontStyle: 'italic'
+                }}
+            >
+                AI Powered Confusion Helper
+            </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
                 <Button variant="contained" onClick={startRecording} disabled={isRecording}>
                     Start Recording
@@ -59,39 +91,52 @@ const AudioRecorder: React.FC = () => {
                     Stop Recording
                 </Button>
             </Box>
-            <Grid container spacing={2} sx={{ marginTop: 10 }}>
-                <Grid item xs={6}>
+            <Grid container spacing={2} sx={{ marginTop: 10, justifyContent: 'center' }}>
+                <Grid item xs={12} md={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Box
                         sx={{
-                            width: '100%',
-                            height: '200px',
-                            backgroundColor: 'lightgray',
+                            width: '80%',
+                            height: '150px',
+                            backgroundColor: '#eeeee4',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: '4px',
+                            border: '2px solid #eeeee4',
+                            marginBottom: '16px'
                         }}
                     >
-                        <Typography variant="h6">Text in Box 1</Typography>
+                        <Typography variant="h6">Input from Sound stream</Typography>
                     </Box>
-                </Grid>
-                <Grid item xs={6}>
                     <Box
                         sx={{
-                            width: '100%',
-                            height: '200px',
-                            backgroundColor: 'lightgray',
+                            width: '80%',
+                            height: '250px',
+                            backgroundColor: '#eeeee4',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             borderRadius: '4px',
+                            border: '2px solid #eeeee4',
+                            position: 'relative'
                         }}
                     >
-                        <Typography variant="h6">Text in Box 2</Typography>
+                        <Typography variant="h6">Output from AI</Typography>
+                        <Button 
+                            variant="contained" 
+                            onClick={saveText} 
+                            sx={{ 
+                                position: 'absolute', 
+                                bottom: 10, 
+                                right: 10 
+                            }}
+                        >
+                            Save Text
+                        </Button>
                     </Box>
                 </Grid>
             </Grid>
-
+            {isRecording && <div className="flashing-light" />} {/* Add flashing light */}
         </div>
     );
 };

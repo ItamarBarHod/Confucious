@@ -1,15 +1,19 @@
 import socket from './WebSocketService';
 
-async function startAudioWorklet() {
+let context: AudioContext | null = null;
+let micStream: MediaStream | null = null;
+let workletNode: AudioWorkletNode | null = null;
+
+async function startAudioWorklet(): Promise<AudioContext | null> {
     try {
-        const context = new AudioContext({ sampleRate: 16000 });
+        context = new AudioContext({ sampleRate: 16000 });
         await context.audioWorklet.addModule('/Worklets/audio-processor.js');
 
-        const micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
         const micSource = context.createMediaStreamSource(micStream);
 
-        const workletNode = new AudioWorkletNode(context, 'audio-processor');
-        workletNode.port.onmessage = (event) => {
+        workletNode = new AudioWorkletNode(context, 'audio-processor');
+        workletNode.port.onmessage = (event: MessageEvent<ArrayBuffer>) => {
             const arrayBuffer = event.data;
             socket.emit('audio', arrayBuffer);
         };
@@ -24,4 +28,24 @@ async function startAudioWorklet() {
     }
 }
 
-export default startAudioWorklet;
+function stopAudioWorklet(): void {
+    try {
+        if (workletNode) {
+            workletNode.disconnect();
+            workletNode = null;
+        }
+        if (micStream) {
+            micStream.getTracks().forEach(track => track.stop());
+            micStream = null;
+        }
+        if (context) {
+            context.close();
+            context = null;
+        }
+    } catch (err) {
+        console.error('Error in stopAudioWorklet:', err);
+        throw err;
+    }
+}
+
+export { startAudioWorklet, stopAudioWorklet };

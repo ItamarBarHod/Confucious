@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Typography, Box, Alert, Divider } from '@mui/material';
-import startAudioWorklet from '../Services/AudioWorklet';
+import { startAudioWorklet, stopAudioWorklet } from '../Services/AudioWorklet';
 import socket from '../Services/WebSocketService';
 
 const WebSocketComponent: React.FC = () => {
@@ -28,6 +28,7 @@ const WebSocketComponent: React.FC = () => {
     const handleStop = () => {
         setIsRecording(false);
         setStartTime(null);
+        stopAudioWorklet();
         console.log('Audio Worklet stopped');
     };
 

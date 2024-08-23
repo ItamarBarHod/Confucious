@@ -7,19 +7,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Conficious</title>
   <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       background-image: url('/Background.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      height: 100vh;
-      margin: 0;
-      padding: 0;
+      background-attachment: fixed;
+      /* Ensures the background stays fixed during scroll */
       font-family: Arial, sans-serif;
-      /* Optional: set a default font */
+    }
+
+    #root {
+      min-height: 100vh;
+      /* Ensures the root element covers the full viewport height */
+      background-color: rgba(0, 0, 0, 0);
+      /* Transparent background to see the background image */
     }
   </style>
-
 </head>
 
 <body>

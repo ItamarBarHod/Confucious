@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Typography, Box, Alert, Divider } from '@mui/material';
+import { Button, Typography, Box, Alert, Divider, AppBar, Toolbar } from '@mui/material';
 import { startAudioWorklet, stopAudioWorklet } from '../Services/AudioWorklet';
 import socket from '../Services/WebSocketService';
 
@@ -121,6 +121,20 @@ const WebSocketComponent: React.FC = () => {
                 padding: 2
             }}
         >
+            {/* AppBar with Toolbar */}
+            <AppBar position="static">
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                    <Typography variant="h6" component="div">
+                        Conficius
+                    </Typography>
+                    <Box>
+                        <Button color="inherit">About</Button>
+                        <Button color="inherit">Login</Button>
+                        <Button color="inherit">Sign Up</Button>
+                    </Box>
+                </Toolbar>
+            </AppBar>
+
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', maxWidth: '1500px', justifyContent: 'space-between' }}>
                 <Box sx={{
                     backgroundColor: 'white',
@@ -131,8 +145,10 @@ const WebSocketComponent: React.FC = () => {
                     backdropFilter: 'blur(10px)',
                     overflow: 'auto',
                     height: '75vh',
+                    marginTop: 3,
                     marginRight: 2,
                 }}>
+
                     <Typography variant="h6">Lecture Transcription:</Typography>
                     <Divider />
                     <Box>
@@ -150,9 +166,10 @@ const WebSocketComponent: React.FC = () => {
                     backdropFilter: 'blur(10px)',
                     overflow: 'auto',
                     height: '75vh',
+                    marginTop: 3,
                     marginLeft: 2
                 }}>
-                    <Typography variant="h6">Detected Questions:</Typography>
+                    <Typography variant="h6">Detected Questions & Answers:</Typography>
                     <Divider />
                     <Box>
                         {questions.map((question, index) => (
@@ -199,9 +216,6 @@ const WebSocketComponent: React.FC = () => {
             {error && <Alert severity="error" sx={{ position: 'absolute', bottom: 16, left: 16 }}>{error}</Alert>}
         </Box>
     );
-
-
-
 };
 
 export default WebSocketComponent;

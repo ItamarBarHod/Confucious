@@ -32,7 +32,7 @@ def on_audio(data):
 
 @app.route('/')
 def index():
-    return "Conficious Backend"
+    return "Confucious Backend"
 
 if __name__ == '__main__':
     print("Starting server, please wait...")

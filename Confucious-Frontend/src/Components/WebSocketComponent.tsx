@@ -125,7 +125,7 @@ const WebSocketComponent: React.FC = () => {
             <AppBar position="static">
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
                     <Typography variant="h6" component="div">
-                        Conficius
+                        Confucius
                     </Typography>
                     <Box>
                         <Button color="inherit">About</Button>

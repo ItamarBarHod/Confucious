@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Typography, Box, Alert } from '@mui/material';
+import { Button, Typography, Box, Alert, Divider } from '@mui/material';
 import startAudioWorklet from '../Services/AudioWorklet';
 import socket from '../Services/WebSocketService';
 
@@ -111,19 +111,29 @@ const WebSocketComponent: React.FC = () => {
     }, [elapsedTime]);
 
     return (
-        <Box sx={{ backgroundColor: 'orange', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 2 }}>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', maxWidth: '1200px', justifyContent: 'space-between' }}>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 2
+            }}
+        >
+            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', maxWidth: '1500px', justifyContent: 'space-between' }}>
                 <Box sx={{
                     backgroundColor: 'white',
                     borderRadius: 2,
                     boxShadow: 2,
                     padding: 2,
-                    width: '45%',
+                    width: '70%',
                     backdropFilter: 'blur(10px)',
                     overflow: 'auto',
-                    height: '80vh'
+                    height: '75vh',
+                    marginRight: 2,
                 }}>
                     <Typography variant="h6">Lecture Transcription:</Typography>
+                    <Divider />
                     <Box>
                         {sentences.map((sentence, index) => (
                             <Typography key={index} variant="body1">{sentence}</Typography>
@@ -135,12 +145,14 @@ const WebSocketComponent: React.FC = () => {
                     borderRadius: 2,
                     boxShadow: 2,
                     padding: 2,
-                    width: '45%',
+                    width: '70%',
                     backdropFilter: 'blur(10px)',
                     overflow: 'auto',
-                    height: '80vh'
+                    height: '75vh',
+                    marginLeft: 2
                 }}>
                     <Typography variant="h6">Detected Questions:</Typography>
+                    <Divider />
                     <Box>
                         {questions.map((question, index) => (
                             <Box key={index} mt={2}>
@@ -158,18 +170,36 @@ const WebSocketComponent: React.FC = () => {
                     </Box>
                 </Box>
             </Box>
-            <Box sx={{ marginTop: 2 }}>
-                <Typography variant="body1">Elapsed Time: {elapsedTime}</Typography>
-                <Button onClick={handleStart} variant="contained" color="primary" disabled={isRecording} sx={{ margin: 1 }}>
-                    Start Recording
-                </Button>
-                <Button onClick={handleStop} variant="contained" color="secondary" disabled={!isRecording} sx={{ margin: 1 }}>
-                    Stop Recording
-                </Button>
+
+            {/* Centered Box containing Elapsed Time and Buttons */}
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                marginTop: 2
+            }}>
+                <Box sx={{
+                    backgroundColor: 'white',
+                    borderRadius: 2,
+                    boxShadow: 2,
+                    padding: 2,
+                    alignItems: 'center',
+                }}>
+                    <Typography variant="body1" sx={{ marginBottom: 1, textAlign: 'center' }}>Elapsed Time: {elapsedTime}</Typography>
+                    <Button onClick={handleStart} variant="contained" color="primary" disabled={isRecording} sx={{ margin: 1 }}>
+                        Start Recording
+                    </Button>
+                    <Button onClick={handleStop} variant="contained" color="secondary" disabled={!isRecording} sx={{ margin: 1 }}>
+                        Stop Recording
+                    </Button>
+                </Box>
             </Box>
+
             {error && <Alert severity="error" sx={{ position: 'absolute', bottom: 16, left: 16 }}>{error}</Alert>}
         </Box>
     );
+
+
 
 };
 

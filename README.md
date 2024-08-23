@@ -25,7 +25,7 @@
 
 ## An example of a simple transcription in Confucious:
 
-![image](https://github.com/user-attachments/assets/06109c73-31aa-41da-9302-640d2c21a8c9)
+![Example Image](https://github.com/ItamarBarHod/Confucious/blob/main/example.png)
 
 # Preparation for running Confucious:
 

@@ -1,4 +1,4 @@
-<h1 align="center">Confucious</h1>
+<h1 align="center">Confucious - AI Webapp</h1>
 
 ## About the project
 
